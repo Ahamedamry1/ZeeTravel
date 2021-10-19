@@ -69,6 +69,11 @@ const TripList = ({ navigation }) => {
 					<ListItem.Content style={styles.textContainer}>
 						<ListItem.Title style={styles.titleStyle}>{item.name}</ListItem.Title>
 						<ListItem.Subtitle style={styles.subtitleStyle}>{`Category: ${item.category}`}</ListItem.Subtitle>
+						{/* leftAvatar={{
+                  				size: 'large',
+                 			 rounded: false,
+                 			 source: item.image && { uri: item.image }
+                			}} */}
 					</ListItem.Content>
 				</ListItem>
         
