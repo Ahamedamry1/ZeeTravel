@@ -26,16 +26,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        
-      <Stack.Screen name="TripList" component={TripList}/>
+      
       <Stack.Screen name="TripForm" component={TripForm}/> 
+      <Stack.Screen name="TripList" component={TripList}/>
       <Stack.Screen name="HostForm" component={HostForm}/>
-      
-      
-        
         <Stack.Screen name="TripDetail" component={TripDetail}/>
-        
-       
         <Stack.Screen name="Login" component={Login}/>
 
       </Stack.Navigator>

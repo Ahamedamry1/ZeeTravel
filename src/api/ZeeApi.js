@@ -1,6 +1,9 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase";
 import { initializeApp } from "firebase/app";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,18 +26,6 @@ const app = firebase.initializeApp(firebaseConfig);
 
 
 
-export function addTrip(trip) {
-  trip.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-  console.log(trip);
-  firebase.firestore()
-    .collection('Trip')
-    .add(trip)
-    .then((snapshot) => {
-      trip.id = snapshot.id;
-      snapshot.set(trip);
-    }).then((result) =>console.log(result) )
-    .catch((error) => console.log(error));
-}
 
 export function addHost(host) {
   host.createdAt = firebase.firestore.FieldValue.serverTimestamp();
@@ -49,27 +40,49 @@ export function addHost(host) {
     .catch((error) => console.log(error));
 }
 
-export async function getTrips(tripRetreived) {
 
-  const tripList = [];
 
-  const snapshot = await firebase.firestore()
-    .collection('Trip')
-    .orderBy('createdAt')
-    .get()
 
-  snapshot.forEach((doc) => {
-    const tripItem = doc.data();
-    tripItem.id = doc.id;
-    tripList.push(tripItem);
-  });
 
-  tripRetreived(tripList);
+export async function getTrips() {
+	const tripList = [];
+
+	const snapshot = await firebase
+		.firestore()
+		.collection('Trip')
+		.orderBy('createdAt')
+		.get();
+
+	snapshot.forEach((doc) => {
+		const tripItem = doc.data();
+		tripItem.id = doc.id;
+		tripList.push(tripItem);
+	});
+
+	return tripList;
 }
+
+// export async function getTrips(tripRetreived) {
+
+//   const tripList = [];
+
+//   const snapshot = await firebase.firestore()
+//     .collection('Trip')
+//     .orderBy('createdAt')
+//     .get()
+
+//   snapshot.forEach((doc) => {
+//     const tripItem = doc.data();
+//     tripItem.id = doc.id;
+//     tripList.push(tripItem);
+//   });
+
+//   tripRetreived(tripList);
+// }
 
 export function updateTrip(trip) {
   trip.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-  console.log("Updating food in firebase");
+  console.log("Updating trip in firebase");
 
   firebase.firestore()
     .collection('Trip')
@@ -83,7 +96,85 @@ export function deleteTrip(trip, deleteComplete) {
 
   firebase.firestore()
     .collection('Trip')
-    .doc(food.id).delete()
+    .doc(trip.id).delete()
     .then(() => deleteComplete())
+    .catch((error) => console.log(error));
+}
+
+export function uploadTrip(trip, onTripUploaded, { updating }) {
+
+  if (trip.imageUri) {
+    const fileExtension = trip.imageUri.split('.').pop();
+    console.log("EXT: " + fileExtension);
+
+    var uuid = uuidv4();
+
+    const fileName = `${uuid}.${fileExtension}`;
+    console.log(fileName);
+
+    var storageRef = firebase.storage().ref(`trips/images/${fileName}`);
+
+    storageRef.putFile(trip.imageUri)
+      .on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+        snapshot => {
+          console.log("snapshot: " + snapshot.state);
+          console.log("progress: " + (snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+          if (snapshot.state === firebase.storage.TaskState.SUCCESS) {
+            console.log("Success");
+          }
+        },
+        error => {
+          unsubscribe();
+          console.log("image upload error: " + error.toString());
+        },
+        () => {
+          storageRef.getDownloadURL()
+            .then((downloadUrl) => {
+              console.log("File available at: " + downloadUrl);
+
+              trip.image = downloadUrl;
+
+              delete trip.imageUri;
+
+              if (updating) {
+                console.log("Updating....");
+                updateTrip(trip, onTripUploaded);
+              } else {
+                console.log("adding...");
+                addTrip(trip, onTripUploaded);
+              }
+            })
+        }
+      )
+  } else {
+    console.log("Skipping image upload");
+
+    delete trip.imageUri;
+
+    if (updating) {
+      console.log("Updating....");
+      updateTrip(trip, onTripUploaded);
+    } else {
+      console.log("adding...");
+      addTrip(trip, onTripUploaded);
+    }
+  }
+}
+
+
+
+
+export function addTrip(trip) {
+  trip.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  console.log(trip);
+  firebase.firestore()
+    .collection('Trip')
+    .add(trip)
+    .then((snapshot) => {
+      trip.id = snapshot.id;
+      snapshot.set(trip);
+    }).then((result) =>console.log(result) )
     .catch((error) => console.log(error));
 }

@@ -9,20 +9,29 @@ import {
   ScrollView,
   
 } from 'react-native';
-import {addTrip} from '../api/ZeeApi';
+import {addTrip,uploadFood} from '../api/ZeeApi';
 import { Formik } from 'formik';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ZeeImagePicker from '../ui/ZeeImagePicker';
 
 
 const  TripForm = (props) =>{
 
+
+  setTripImage = (image) => {
+    setFieldValue('imageUri', image.uri);
+  }
+
+
     return (
       <Formik
-      initialValues={{name:'',category:'',location:'',checkList:'',checkMissEx:'',details:'',budget:'',pax:'',fBudget:'',otherDetails:'',offerTime:'',contactDetails:'',exp:''}}
+      initialValues={{image:null,name:'',category:'',location:'',checkList:'',checkMissEx:'',details:'',budget:'',pax:'',fBudget:'',otherDetails:'',offerTime:'',contactDetails:'',exp:''}}
       onSubmit={values => addTrip(values)}
       
       >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
+
+        
       <SafeAreaView>
       <ScrollView>  
       
@@ -30,6 +39,9 @@ const  TripForm = (props) =>{
             <Text style={styles.title}> Add a Travel Detail</Text>
             </View>
       <View style={styles.container}>
+      <ZeeImagePicker image={values.image} 
+      onImagePicked={setTripImage}      
+      />
       <TextInput
        // value={props.values.name}
         style={styles.longFormInput}
