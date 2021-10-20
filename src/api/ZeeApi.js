@@ -25,7 +25,9 @@ const app = firebase.initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
 
+const auth = firebase.auth()
 
+export { auth };
 
 export function addHost(host) {
   host.createdAt = firebase.firestore.FieldValue.serverTimestamp();

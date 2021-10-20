@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HostForm from './src/ui/HostForm';
 import TripList from './src/screens/TripList';
+import Home from './src/ui/Home';
 //import { createNativeStackNavigator } from '@react-native-screens/native-stack';
 
 
@@ -27,11 +28,15 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
       
-      <Stack.Screen name="TripForm" component={TripForm}/> 
+     
       <Stack.Screen name="TripList" component={TripList}/>
+      <Stack.Screen options={{ headerShown: false }} name="Login" component={Login}/>
+      <Stack.Screen name="TripForm" component={TripForm}/> 
+      
       <Stack.Screen name="HostForm" component={HostForm}/>
         <Stack.Screen name="TripDetail" component={TripDetail}/>
-        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name="Home" component={Home}/>
+        
 
       </Stack.Navigator>
     

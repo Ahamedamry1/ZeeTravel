@@ -32,7 +32,9 @@ const  HostForm = (props) =>{
             <View style={styles.title}>
             <Text style={styles.title}> Host an Experience</Text>
             </View>
-        <View style={styles.container}>
+        <View style={styles.container}
+         behavior="padding"
+         >
         <TextInput
          
           style={styles.longFormInput}
@@ -99,10 +101,10 @@ const  HostForm = (props) =>{
        />
        
         <Button
-        
+       
           title='Submit'
           onPress={handleSubmit}
-          
+         
         />
       </View>
       </ScrollView>
@@ -171,14 +173,22 @@ const  HostForm = (props) =>{
       marginTop: 16
     },
     title:{
-        fontSize: 50,
+        fontSize: 40,
        // fontWeight: 'bold',
         marginTop:10,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
+        
 
 
-    }
+    },
+    button: {
+      backgroundColor: '#0782F9',
+      width: '100%',
+      padding: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+    },
     
    
   });

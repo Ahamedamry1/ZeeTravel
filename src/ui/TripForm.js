@@ -38,7 +38,9 @@ const  TripForm = (props) =>{
         <View style={styles.title}>
             <Text style={styles.title}> Add a Travel Detail</Text>
             </View>
-      <View style={styles.container}>
+      <View style={styles.container}
+       behavior="padding"
+       >
       <ZeeImagePicker image={values.image} 
       onImagePicked={setTripImage}      
       />
@@ -180,6 +182,7 @@ const  TripForm = (props) =>{
       <Button
       
         title='Submit'
+        
         onPress={handleSubmit}
        // onPress={() => props.handleSubmit()}
         

@@ -10,18 +10,20 @@ import {
 import { Divider, Icon } from 'react-native-elements';
 import { deleteTrip } from '../api/ZeeApi'
 
-class TripDetailScreen extends Component {
+function TripDetailScreen ({ route, navigation }) {
 
-  static navigationOptions = () => {
-    return {
-      title: 'Trip Details'
-    }
-  };
+  // static navigationOptions = () => {
+  //   return {
+  //     title: 'Trip Details'
+  //   }
+  // };
 
-  render() {
-    const trip = this.props.navigation.getParam('trip');
+  
+  const { trip, tripDeletedCallback } = route.params;
 
-    const onTripDeleted = this.props.navigation.getParam('tripDeletedCallback');
+    // const trip = this.props.navigation.getParam('trip');
+
+    // const onTripDeleted = this.props.navigation.getParam('tripDeletedCallback');
 
     console.log(trip);
     return (
@@ -61,7 +63,7 @@ class TripDetailScreen extends Component {
 
       </View >
     );
-  }
+  
 }
 
 const styles = StyleSheet.create({
@@ -86,17 +88,6 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 20,
     marginBottom: 32
-  },
-  ingredientText: {
-    fontStyle: 'italic',
-    fontSize: 18,
-    marginBottom: 32
-  },
-  ingredientItemText: {
-    fontSize: 16,
-    alignSelf: 'center',
-    marginBottom: 16,
-    marginTop: 16
   },
   container: {
     alignItems: 'center'
