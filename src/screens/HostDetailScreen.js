@@ -8,9 +8,9 @@ import {
   Image
 } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
-import { deleteTrip } from '../api/ZeeApi'
+//import { deleteHost } from '../api/ZeeApi'
 
-function TripDetailScreen ({ route, navigation }) {
+function HostDetailScreen ({ route, navigation }) {
 
   // static navigationOptions = () => {
   //   return {
@@ -19,13 +19,13 @@ function TripDetailScreen ({ route, navigation }) {
   // };
 
   
-  const { trip, tripDeletedCallback } = route.params;
+  const { host, HostDeletedCallback } = route.params;
 
     // const trip = this.props.navigation.getParam('trip');
 
     // const onTripDeleted = this.props.navigation.getParam('tripDeletedCallback');
 
-    console.log(trip);
+    console.log(host);
     return (
       <View style={styles.container}>
         <View style={styles.row}>
@@ -34,8 +34,8 @@ function TripDetailScreen ({ route, navigation }) {
             name='ios-create'
             type='ionicon'
             onPress={() =>
-              this.props.navigation.navigate('TripForm', {
-                trip: trip
+              this.props.navigation.navigate('HostForm', {
+                host: host
               })
             }
           />
@@ -50,7 +50,7 @@ function TripDetailScreen ({ route, navigation }) {
                 'Cannot be undone',
                 [
                   { text: 'Cancel' },
-                  { text: 'OK', onPress: () => { deleteTrip(trip, onTripDeleted) } }
+                  { text: 'OK', onPress: () => { deleteHost(host, onHostDeleted) } }
                 ],
                 { cancelable: false },
               )
@@ -58,19 +58,14 @@ function TripDetailScreen ({ route, navigation }) {
           />
         </View>
         
-        <Text style={styles.headerText}>{trip.name}</Text>
-        <Text style={styles.categoryText}>Category: {trip.category}</Text>
-        <Text style={styles.categoryText}>Location: {trip.location}</Text>
-        <Text style={styles.categoryText}>Check-List: {trip.checkList}</Text>
-        <Text style={styles.categoryText}>Check-List Missing Experience: {trip.checkMissEx}</Text>
-        <Text style={styles.categoryText}>Details of the Trip: {trip.details}</Text>
-        <Text style={styles.categoryText}>Total Budget: {trip.budget}</Text>
-        <Text style={styles.categoryText}>Total Pax: {trip.pax}</Text>
-        <Text style={styles.categoryText}>Detail Budget: {trip.fBudget}</Text>
-        <Text style={styles.categoryText}>Special Details: {trip.otherDetails}</Text>
-        <Text style={styles.categoryText}>Special offer Time: {trip.offerTime}</Text>
-        <Text style={styles.categoryText}>Contact Details: {trip.contactDetails}</Text>
-        <Text style={styles.categoryText}>Experience: {trip.exp}</Text>
+        <Text style={styles.headerText}>{host.name}</Text>
+        <Text style={styles.categoryText}>Place Name: {host.place}</Text>
+        <Text style={styles.categoryText}>Details of the Host: {host.detailsHost}</Text>
+        <Text style={styles.categoryText}>Location: {host.location}</Text>
+        <Text style={styles.categoryText}> Charge for the Trip: {host.charge}</Text>
+        <Text style={styles.categoryText}>Contact Details: {host.contactdet}</Text>
+        <Text style={styles.categoryText}>Details of the Trip: {host.details}</Text>
+        
 
       </View >
     );
@@ -112,4 +107,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TripDetailScreen;
+export default HostDetailScreen;

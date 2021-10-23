@@ -18,7 +18,7 @@ const  Login= () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.replace("Home")
+        navigation.replace("Dashboard")
       }
     })
 
@@ -56,7 +56,9 @@ const  Login= () => {
             </View>
          
            
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer}
+      behavior="padding"
+      >
         <TextInput
           placeholder="Email"
            value={email}

@@ -75,7 +75,7 @@ const  HostForm = (props) =>{
         <TextInput
          
          style={styles.longFormInput}
-         placeholder='Cherge for the Trip'
+         placeholder='Charge for the Trip'
          onChangeText={handleChange('charge')}
         onBlur={handleBlur('charge')}
         value={values.charge} 

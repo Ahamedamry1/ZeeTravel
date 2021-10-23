@@ -64,6 +64,24 @@ export async function getTrips() {
 	return tripList;
 }
 
+export async function getHosts() {
+	const hostList = [];
+
+	const snapshot = await firebase
+		.firestore()
+		.collection('host')
+		.orderBy('createdAt')
+		.get();
+
+	snapshot.forEach((doc) => {
+		const hostItem = doc.data();
+		hostItem.id = doc.id;
+		hostList.push(hostItem);
+	});
+
+	return hostList;
+}
+
 // export async function getTrips(tripRetreived) {
 
 //   const tripList = [];

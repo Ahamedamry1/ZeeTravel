@@ -18,14 +18,14 @@ import ZeeImagePicker from '../ui/ZeeImagePicker';
 const  TripForm = (props) =>{
 
 
-  setTripImage = (image) => {
-    setFieldValue('imageUri', image.uri);
-  }
+  // setTripImage = (image) => {
+  //   setFieldValue('imageUri', image.uri);
+  // }
 
 
     return (
       <Formik
-      initialValues={{image:null,name:'',category:'',location:'',checkList:'',checkMissEx:'',details:'',budget:'',pax:'',fBudget:'',otherDetails:'',offerTime:'',contactDetails:'',exp:''}}
+      initialValues={{name:'',category:'',location:'',checkList:'',checkMissEx:'',details:'',budget:'',pax:'',fBudget:'',otherDetails:'',offerTime:'',contactDetails:'',exp:''}}
       onSubmit={values => addTrip(values)}
       
       >
@@ -41,9 +41,9 @@ const  TripForm = (props) =>{
       <View style={styles.container}
        behavior="padding"
        >
-      <ZeeImagePicker image={values.image} 
+      {/* <ZeeImagePicker image={values.image} 
       onImagePicked={setTripImage}      
-      />
+      /> */}
       <TextInput
        // value={props.values.name}
         style={styles.longFormInput}
